@@ -94,7 +94,13 @@
                 var _this = this;
 
                 if (this.index > 0) {
-                    this.index --;
+					if((this.index-1)<=0)//防止不能滑动时还修改index
+					{
+						this.index=0;
+					}
+					else{
+						this.index --;
+					}
                 } else if (this.settings.loop) {
                     this.index = this.pagesCount - 1;
                 }
@@ -103,8 +109,14 @@
 
             next: function () {
                 var _this = this;
-                if (this.index < this.pagesCount) {
-                    this.index ++;
+                if (this.index < this.pagesCount-1) {
+					if((this.index)>=this.pagesCount) //防止不能滑动时还修改index
+					{
+						this.index=this.pagesCount-1;
+					}
+					else{
+						this.index ++;
+					}
                 } else if (this.settings.loop) {
                     this.index = 0;
                 }
@@ -221,6 +233,10 @@
                 return;
             }
             _this.canScroll = false;
+			if(_this.index==0 ||(_this.index+1)==_this.section.length)  //防止到底或者到顶时，因为没有css事件的响应，没有把canScroll这个参数重置
+			{
+				 _this.canScroll = true;
+			}
             if (_prefix) {
                 _this.sections.css(_prefix + 'transition', 'all ' + _this.settings.duration + 'ms ' + _this.settings.easing);
                 var translate = _this.direction ? 'translateY(-' + dest.top + 'px)' : 'translateX(-' + dest.left + 'px)';
