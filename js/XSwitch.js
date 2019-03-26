@@ -193,7 +193,7 @@
                     }
                     
                 }); 
-                e.preventDefault();
+                //e.preventDefault();去掉阻止的事件
             });
 
             if (_this.settings.keyboard) {
